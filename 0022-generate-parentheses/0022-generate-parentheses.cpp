@@ -6,14 +6,14 @@ public:
             return;
         }
         
-//         left side
+//         left  side parenthesis
         if(left < n){
             temp.push_back('(');
             parenthesis(n,left+1,right,temp,ans);
             temp.pop_back();
         }
         
-//         right side
+//         right side parenthesis
         if(right < left){
             temp.push_back(')');
             parenthesis(n,left,right+1,temp,ans);
