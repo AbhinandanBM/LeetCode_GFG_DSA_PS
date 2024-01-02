@@ -2,20 +2,25 @@ class Solution {
 public:
     int winner(vector<bool>& person,int n,int person_left,int index,int k){
         if(person_left == 1){
-            for(int i=0;i<person.size();i++){
+            for(int i=0;i<n;i++){
                 if(person[i]==0)
-                    return i+1;
+                    return i;
             }
         }
         
+//         find the position to kill
         int kill = (k-1)%person_left;
+        
         while(kill--){
             index=(index+1)%n;
+//             skip the killed person
             while(person[index]==1){
                 index=(index+1)%n;
             }
         }
         person[index]=1;
+        
+//        Next alive person
         while(person[index]==1){
             index=(index+1)%n;
         }
@@ -26,7 +31,7 @@ public:
         vector<bool> person(n,0);
         int person_left = n;
         
-        return winner(person,n,person_left,0,k);
+        return winner(person,n,person_left,0,k)+1;
         
     }
 };
