@@ -11,24 +11,45 @@
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
-        ListNode *temp=head;
-        vector<int> arr;
-        while(temp){
-            arr.push_back(temp->val);
-            temp=temp->next;
+        if (head == nullptr) return true;  // Handle empty list
+
+        int count = 0;
+        ListNode *temp = head;
+        while (temp) {
+            count++;
+            temp = temp->next;
         }
+
+        if(count==1)
+            return 1;
         
-        int start=0,end=arr.size()-1;
-        while(start<=end){
-            if(arr[start]==arr[end]){
-                start++;
-                end--;
-            }
-            else{
-                return 0;
-            }
+        count /= 2;
+        ListNode *curr = head, *prev = nullptr;
+        while (count--) {
+            prev = curr;
+            curr = curr->next;
         }
-        return 1;
-        
+        prev->next = nullptr;  // Disconnect second half
+
+        // Reverse second half
+        ListNode *front = nullptr, *new_tail = curr;
+        while (curr) {
+            front = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = front;
+        }
+
+        // Compare first and second halves, skipping middle node if odd
+        ListNode *head1 = head, *head2 = prev;
+        if (count % 2 == 1) head1 = head1->next;  // Skip middle node for odd-length
+
+        while (head1 && head2) {
+            if (head1->val != head2->val) return false;
+            head1 = head1->next;
+            head2 = head2->next;
+        }
+
+        return true;
     }
 };
