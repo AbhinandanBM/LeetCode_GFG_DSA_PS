@@ -69,27 +69,22 @@ struct Node {
 Node *removeDuplicates(Node *head)
 {
  // your code goes here
- vector<int> ans;
- ans.push_back(head->data);
- Node *curr=head->next;
+ if(!head || head->next==NULL)
+ return head;
+ 
+ Node *curr=head->next,*prev=head;
  
  while(curr){
-     if(ans.back()!=curr->data)
-        ans.push_back(curr->data);
-    
-    curr=curr->next;
+     if(curr->data==prev->data){
+         prev->next=curr->next;
+         delete curr;
+         curr=prev->next;
+     }
+     else{
+         curr=curr->next;
+         prev=prev->next;
+     }
  }
- 
- curr=head;
- Node *prev=NULL;
- int index=0;
- while(index<ans.size()){
-     curr->data=ans[index++];
-     prev=curr;
-     curr=curr->next;
- }
- prev->next=NULL;
- 
  return head;
  
  
