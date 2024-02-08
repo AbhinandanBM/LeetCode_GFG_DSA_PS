@@ -5,8 +5,10 @@ public:
         int count=0;
         
         for(int i=0;i<s.size();i++){
+//             Opening
             if(s[i]=='(')
                 st.push(s[i]);
+//             Closing
             else{
                 if(st.empty())
                     count++;
