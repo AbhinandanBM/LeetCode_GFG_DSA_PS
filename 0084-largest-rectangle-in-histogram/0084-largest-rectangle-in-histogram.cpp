@@ -1,44 +1,45 @@
 class Solution {
 public:
     int largestRectangleArea(vector<int>& heights) {
-        int n=heights.size();
-        vector<int> Right(n);
-        vector<int> Left(n);
+//         Optimized Approach
+        int ans=0,n=heights.size();
         stack<int> st;
         
-//         Next Smallest Right
         for(int i=0;i<n;i++){
             while(!st.empty() && heights[st.top()]>heights[i]){
-                Right[st.top()]=i;
+//                 Next smallest Right
+                int index=st.top();
                 st.pop();
+                
+//                 Next smallest left will be top of the stack
+                if(!st.empty()){
+                    ans=max(ans,heights[index]*(i-st.top()-1));
+                }
+//                 top of the stack not exists
+                else
+                {
+                    ans=max(ans,heights[index]*i);
+                }
+                
             }
             st.push(i);
         }
-//         still stack contains value not able to find the next smallest right
-        while(!st.empty()){
-            Right[st.top()]=n;
-            st.pop();
-        }
         
-//         Next Smallest Left
-        for(int i=n-1;i>=0;i--){
-            while(!st.empty() && heights[st.top()]>heights[i]){
-                Left[st.top()]=i;
-                st.pop();
-            }
-            st.push(i);
-        }
-//         still stack contains value not able to find the next smallest left
+//         Still stack exists not able to get the next smallest right then will be size of height
         while(!st.empty()){
-            Left[st.top()]=-1;
+            int index=st.top();
             st.pop();
-        }
-        
-//         Largest Rectangle to find
-        int ans=0;
-        for(int i=0;i<n;i++){
-            ans=max(ans,heights[i]*(Right[i]-Left[i]-1));
+            
+            if(!st.empty()){
+                    ans=max(ans,heights[index]*(n-st.top()-1));
+                }
+                else
+                {
+                    ans=max(ans,heights[index]*n);
+                }
+            
         }
         return ans;
+        
     }
 };
