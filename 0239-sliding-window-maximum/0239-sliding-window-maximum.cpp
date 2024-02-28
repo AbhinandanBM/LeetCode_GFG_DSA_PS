@@ -21,7 +21,6 @@ public:
 //         store the next element of k window in queue
         for(int i=k-1;i<nums.size();i++){
 //             the current element is greater than queue back then pop it
-                while(!d.empty() && nums[i]>nums[d.back()])
             while(!d.empty() && nums[i]>nums[d.back()])
                 d.pop_back();
             
