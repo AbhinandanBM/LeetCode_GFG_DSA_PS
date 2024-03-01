@@ -1,16 +1,22 @@
 class Solution {
 public:
     string maximumOddBinaryNumber(string s) {
-//         using coutn sort approach
-        int cnt1=0,n=s.size();
+//         two pointer approach
+        int n=s.size();
+        int left=0,right=n-1;
         
-        for(int i=0;i<n;i++){
-            if(s[i]=='1')
-                cnt1++;
+        while(left<=right){
+            if(s[left]=='1')
+                left++;
+            if(s[right]=='0')
+                right--;
+            
+            if(left<=right && s[left]=='0' && s[right]=='1')
+                swap(s[left],s[right]);
         }
         
-        string ans=string(cnt1-1,'1')+string(n-cnt1,'0')+'1';
-        return ans;
+        swap(s[left-1],s[n-1]);
+        return s;
         
     }
 };
