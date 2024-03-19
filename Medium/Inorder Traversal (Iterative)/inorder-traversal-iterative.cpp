@@ -98,36 +98,36 @@ class Solution {
 public:
     vector<int> inOrder(Node* root)
     {
-        //code here
-        stack<Node *> st;
-        stack<bool> visited;
-        st.push(root);
-        visited.push(0);
-        
+        //using morris traversal
         vector<int> ans;
         
-        while(!st.empty()){
-            Node *temp=st.top();
-            st.pop();
-            int flag=visited.top();
-            visited.pop();
+        while(root){
+        // left subtree does not exist
+        if(!root->left){
+            ans.push_back(root->data);
+            root=root->right;
+        }
+        else{
+            Node *curr=root->left;
             
-            if(!flag){
-                if(temp->right){
-                    st.push(temp->right);
-                    visited.push(0);
-                }
-                st.push(temp);
-                visited.push(1);
-                if(temp->left){
-                    st.push(temp->left);
-                    visited.push(0);
-                }
+            while(curr->right && curr->right!=root){
+                curr=curr->right;
             }
+            
+            // Not traversed yet left side
+            if(curr->right==NULL){
+                curr->right=root;
+                root=root->left;
+            }
+            // Already traversed the left subtree and link is there
             else{
-                ans.push_back(temp->data);
+                curr->right=NULL;
+                ans.push_back(root->data);
+                root=root->right;
             }
         }
+        }
+        
         return ans;
     }
 };
