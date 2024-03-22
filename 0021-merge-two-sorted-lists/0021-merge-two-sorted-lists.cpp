@@ -11,31 +11,31 @@
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode *dummy=new ListNode(0);
-        ListNode *dhead=dummy;
-        ListNode *head1=list1,*head2=list2;
-        
-        while(head1 && head2){
-            if(head1->val<=head2->val){
-                dummy->next=head1;
-                head1=head1->next;
-                dummy=dummy->next;
-                dummy->next=NULL;
-            }
-            else if(head2->val<head1->val){
-                dummy->next=head2;
-                head2=head2->next;
-                dummy=dummy->next;
-                dummy->next=NULL;
-            }
+    if (!list1) return list2;
+    if (!list2) return list1;  // Handle lists with only one node efficiently
+
+    ListNode *dummy = new ListNode(0);
+    ListNode *tail = dummy;  // Use a tail pointer for efficiency
+
+    while (list1 && list2) {
+        if (list1->val <= list2->val) {
+            tail->next = list1;
+            list1 = list1->next;
+        } else {
+            tail->next = list2;
+            list2 = list2->next;
         }
-        
-        if(head1){
-            dummy->next=head1;
+        tail = tail->next;  // Advance tail pointer
+    }
+
+ // Append remaining list
+        if(list1){
+            tail->next=list1;
         }
-        if(head2){
-            dummy->next=head2;
+        if(list2){
+            tail->next=list2;
         }
-        return dhead->next;
+
+    return dummy->next;
     }
 };
