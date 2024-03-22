@@ -42,7 +42,7 @@ public:
 
         // Compare first and second halves, skipping middle node if odd
         ListNode *head1 = head, *head2 = prev;
-        if (count % 2 == 1) head1 = head1->next;  // Skip middle node for odd-length
+        // if (count % 2 == 1) head1 = head1->next;  // Skip middle node for odd-length
 
         while (head1 && head2) {
             if (head1->val != head2->val) return false;
