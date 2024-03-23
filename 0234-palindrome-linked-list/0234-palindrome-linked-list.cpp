@@ -23,9 +23,11 @@ public:
         return prev;
     }
     bool isPalindrome(ListNode* head) {
+//         edge case for no node and only one node exists
         if(!head || !head->next)
             return true;
         
+//         using fast and slow pointer find the midddle node
         ListNode *fast=head,*slow=head,*prev=NULL;
         
         while(fast && fast->next){
@@ -36,9 +38,11 @@ public:
             
         }
         
+//         from middle to end reverse the list
         prev->next=NULL;
         ListNode *tail=reverseNode(slow);
         
+//         compare the both the lists for palindrome
         while(head && tail){
             if(head->val!=tail->val)
                 return false;
