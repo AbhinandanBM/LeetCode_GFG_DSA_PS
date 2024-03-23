@@ -10,46 +10,46 @@
  */
 class Solution {
 public:
-    bool isPalindrome(ListNode* head) {
-        if (head == nullptr) return true;  // Handle empty list
-
-        int count = 0;
-        ListNode *temp = head;
-        while (temp) {
-            count++;
-            temp = temp->next;
-        }
-
-        if(count==1)
-            return 1;
+    ListNode* reverseNode(ListNode* head){
+        ListNode *prev=NULL,*curr=head,*fut=NULL;
         
-        count /= 2;
-        ListNode *curr = head, *prev = nullptr;
-        while (count--) {
-            prev = curr;
-            curr = curr->next;
+        while(curr){
+            fut=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=fut;
         }
-        prev->next = nullptr;  // Disconnect second half
-
-        // Reverse second half
-        ListNode *front = nullptr, *new_tail = curr;
-        while (curr) {
-            front = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = front;
+        
+        return prev;
+    }
+    bool isPalindrome(ListNode* head) {
+//         edge case for no node and only one node exists
+        if(!head || !head->next)
+            return true;
+        
+//         using fast and slow pointer find the midddle node
+        ListNode *fast=head,*slow=head,*prev=NULL;
+        
+        while(fast && fast->next){
+            fast=fast->next->next;
+            
+            prev=slow;
+            slow=slow->next;
+            
         }
-
-        // Compare first and second halves, skipping middle node if odd
-        ListNode *head1 = head, *head2 = prev;
-        if (count % 2 == 1) head1 = head1->next;  // Skip middle node for odd-length
-
-        while (head1 && head2) {
-            if (head1->val != head2->val) return false;
-            head1 = head1->next;
-            head2 = head2->next;
+        
+//         from middle to end reverse the list
+        prev->next=NULL;
+        ListNode *tail=reverseNode(slow);
+        
+//         compare the both the lists for palindrome
+        while(head && tail){
+            if(head->val!=tail->val)
+                return false;
+            
+            head=head->next;
+            tail=tail->next;
         }
-
         return true;
     }
 };
