@@ -1,26 +1,26 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        int left=0,right=nums.size()-1;
+        int slow=nums[0],fast=nums[0];
         
-        while(left < right){
-            int mid=left+(right-left)/2;
-            int count=0;
-            
-//             count the number less than mid
-            for(int num:nums){
-                if(num<=mid)
-                    count++;
-            }
-            
-//          count is greater than mid duplicate lies in left part
-            if(count>mid)
-                right=mid;
-//             otherwise in right part
-            else
-                left=mid+1;
+        slow=nums[slow];
+        fast=nums[nums[fast]];
+        
+//         detect cycle
+        while(slow!=fast){
+            slow=nums[slow];
+            fast=nums[nums[fast]];
         }
         
-        return left;
+//         if cycle present
+        slow=nums[0];
+        while(slow!=fast){
+            slow=nums[slow];
+            fast=nums[fast];
+        }
+        
+//         duplicate value
+        return slow;
+        
     }
 };
