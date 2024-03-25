@@ -1,6 +1,7 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
+//         using Hare - Tortoise Algo Method
         int slow=nums[0],fast=nums[0];
         
         slow=nums[slow];
