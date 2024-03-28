@@ -6,13 +6,22 @@ public:
         int result_len=INT_MIN;
         unordered_map<int,int> freq;
         
+        int culprit=0;
+        
         while(j<n){
             freq[nums[j]]++;
-            while(i<j && freq[nums[j]]>k){
+            if(freq[nums[j]]==k+1)
+                culprit++;
+            if(culprit>0){
                 freq[nums[i]]--;
+                if(freq[nums[i]]==k)
+                    culprit--;
                 i++;
             }
-            result_len=max(result_len,(j-i+1));
+            
+            if(culprit==0)
+                result_len=max(result_len,(j-i+1));
+            
             j++;
         }
         
