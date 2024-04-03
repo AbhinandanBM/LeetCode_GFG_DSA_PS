@@ -1,16 +1,14 @@
 class Solution {
 public:
     int lengthOfLastWord(string s) {
-        int len=0;
-       for(int i=s.length()-1;i>=0;i--){
-           if(s[i]!=' ')
-               len++;
-           else if(s[i]==' ' && len==0)
-               continue;
-           else
-               break;
-       } 
+//         triming the last trailing spaces
+        int index=s.find_last_not_of(' ')+1;
+        s.erase(index);
         
-        return len;
+//         finding the last space 
+        int last_space_index=s.find_last_of(' ');
+        
+        return last_space_index==string::npos?s.length():s.length()-last_space_index-1;
+        
     }
 };
