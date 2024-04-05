@@ -11,20 +11,25 @@
  */
 class Solution {
 public:
-    void inOrder(TreeNode *root,vector<int> &v){
+    void solve(TreeNode* root,int &cnt,int &ans,int k){
         if(root==NULL)
             return;
         
-        inOrder(root->left,v);
-        v.push_back(root->val);
-        inOrder(root->right,v);
+        solve(root->left,cnt,ans,k);
+        cnt++;
+        if(cnt==k){
+            ans=root->val;
+            return;
+        }
+        solve(root->right,cnt,ans,k);
     }
     
     int kthSmallest(TreeNode* root, int k) {
-        vector<int> v;
+        int cnt=0;
+        int ans=0;
         
-        inOrder(root,v);
+        solve(root,cnt,ans,k);
         
-        return v[k-1];
+        return ans;
     }
 };
