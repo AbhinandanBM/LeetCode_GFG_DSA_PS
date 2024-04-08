@@ -1,9 +1,10 @@
 class Solution {
 public:
     int countStudents(vector<int>& students, vector<int>& sandwiches) {
-        queue<int> student,sandwich;
+        queue<int> student;
+        stack<int> sandwich;
         
-        for(int i=0;i<sandwiches.size();i++){
+        for(int i=sandwiches.size()-1;i>=0;i--){
             sandwich.push(sandwiches[i]);
         }
         
@@ -16,7 +17,7 @@ public:
             if(isLoop==student.size())
                 break;
             
-            if(student.front()!=sandwich.front()){
+            if(student.front()!=sandwich.top()){
                 student.push(student.front());
                 student.pop();
                 isLoop++;
